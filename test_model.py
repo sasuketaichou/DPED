@@ -64,8 +64,11 @@ with tf.compat.v1.Session(config=config) as sess:
             before_after = np.hstack((image_crop, enhanced_image))
             photo_name = photo.rsplit(".", 1)[0]
 
-            # save the results as .png images
+            enhanced_image = Image.fromarray((np.clip(enhanced_image, 0.0, 1.0) * 255.0).astype(np.uint8))
+            before_after = Image.fromarray((np.clip(before_after, 0.0, 1.0) * 255.0 ).astype(np.uint8))
 
+            # save the results as .png images
+            
             imageio.imwrite("visual_results/" + phone + "_" + photo_name + "_enhanced.png", enhanced_image)
             imageio.imwrite("visual_results/" + phone + "_" + photo_name + "_before_after.png", before_after)
 
